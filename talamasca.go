@@ -56,7 +56,10 @@ func main() {
 
 	commit, _, err := client.Repositories.GetCommit(context.Background(), owner, repo, "aa88ed97ad7270d83bc3425fbe9bbe401c7c41f4", nil)
 
-	author := commit.GetAuthor()
-	fmt.Printf("Name-%v\nID-%v\nEmail-%v\n", author.GetLogin(), commit.GetAuthor().GetID(), commit.GetAuthor().GetEmail())
+	ghAuthor := commit.GetAuthor()
+	fmt.Printf("Github User: Name-%v\nID-%v\nEmail-%v\n", ghAuthor.GetLogin(), commit.GetAuthor().GetID(), commit.GetAuthor().GetEmail())
+
+	gitAuthor := commit.GetCommit().GetAuthor()
+	fmt.Printf("Git User: Login-%v\nName-%v\nEmail-%v\n", gitAuthor.GetLogin(), gitAuthor.GetName(), gitAuthor.GetEmail())
 
 }
