@@ -44,6 +44,12 @@ func loadConfig(filename string) (*Config, error) {
 
 func main() {
 
+	// Just making in clear that this is PoC and needs to be refactored.
+	// Or my code identifies as Spaghetti.
+	spaghetti()
+}
+
+func spaghetti() {
 	// @TODO deal with errors later when I actually care.
 	config, _ := loadConfig("./config.json")
 
@@ -95,7 +101,12 @@ func main() {
 		commitContributorions = append(commitContributorions, commitData)
 	}
 
-	commit, _, err := client.Repositories.GetCommit(context.Background(), config.Owner, config.Repo, "aa88ed97ad7270d83bc3425fbe9bbe401c7c41f4", nil)
+	writeToFile(config.Repo+".csv", commitContributorions)
+}
+
+// Fetches specific commit sha and prints the ghAuthor and gitAuthor (WHICH ARE DIFFERENT)
+func getCommit(config *Config, sha string) {
+	commit, _, err := client.Repositories.GetCommit(context.Background(), config.Owner, config.Repo, sha, nil)
 	if err != nil {
 		fmt.Printf("Error: %v\n", err)
 		return
@@ -106,8 +117,6 @@ func main() {
 
 	gitAuthor := commit.GetCommit().GetAuthor()
 	fmt.Printf("Git User: Login-%v\nName-%v\nEmail-%v\n", gitAuthor.GetLogin(), gitAuthor.GetName(), gitAuthor.GetEmail())
-
-	writeToFile(config.Repo+".csv", commitContributorions)
 }
 
 // Fetch all releases for a given repository
