@@ -4,7 +4,7 @@
   - [x] Add Config Class
   - [ ] Add CLI Class
   - [ ] Add Web class?
-  - [ ] Add Github class?
+  - [x] Add Github class?
 - [ ] Clean up the csv writer.
   - [ ] Use a struct on the contributor data for more normalized data and write a csv header
 - [ ] Figure out how to cross-reference github PRs with the commits on a release
