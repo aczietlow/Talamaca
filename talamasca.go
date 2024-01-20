@@ -1,22 +1,17 @@
 package main
 
 import (
+	"aczietlow/talamasca/config"
 	"context"
 	"encoding/csv"
-	"encoding/json"
 	"fmt"
 	"github.com/google/go-github/v53/github"
 	"os"
 )
 
-type Config struct {
-	Repo  string `json:"repo"`
-	Owner string `json:"owner"`
-}
-
 var client *github.Client
 
-func initClient(config *Config) {
+func initClient(config *config.Config) {
 	// NewClient returns a new GitHub API client. If a nil httpClient is
 	// provided, a new http.Client will be used. To use API methods which require
 	// authentication, provide an http.Client that will perform the authentication
@@ -27,23 +22,7 @@ func initClient(config *Config) {
 	fmt.Println(client.UserAgent)
 }
 
-func loadConfig(filename string) (*Config, error) {
-	configFile, err := os.ReadFile(filename)
-
-	if err != nil {
-		return nil, err
-	}
-	config := &Config{}
-	err = json.Unmarshal(configFile, config)
-	if err != nil {
-		return nil, err
-	}
-
-	return config, nil
-}
-
 func main() {
-
 	// Just making in clear that this is PoC and needs to be refactored.
 	// Or my code identifies as Spaghetti.
 	spaghetti()
@@ -51,7 +30,7 @@ func main() {
 
 func spaghetti() {
 	// @TODO deal with errors later when I actually care.
-	config, _ := loadConfig("./config.json")
+	config, _ := config.LoadConfig("./config.json")
 
 	initClient(config)
 
@@ -105,7 +84,7 @@ func spaghetti() {
 }
 
 // Fetches specific commit sha and prints the ghAuthor and gitAuthor (WHICH ARE DIFFERENT)
-func getCommit(config *Config, sha string) {
+func getCommit(config *config.Config, sha string) {
 	commit, _, err := client.Repositories.GetCommit(context.Background(), config.Owner, config.Repo, sha, nil)
 	if err != nil {
 		fmt.Printf("Error: %v\n", err)
@@ -125,7 +104,7 @@ func fetchRepoReleases(owner string, reponame string) ([]*github.RepositoryRelea
 	return releases, err
 }
 
-func fetchCommitsFromMostRecentRelease(config *Config) (*github.CommitsComparison, error) {
+func fetchCommitsFromMostRecentRelease(config *config.Config) (*github.CommitsComparison, error) {
 	releases, err := fetchRepoReleases(config.Owner, config.Repo)
 	if err != nil {
 		fmt.Printf("Error: %v\n", err)
