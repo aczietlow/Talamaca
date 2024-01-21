@@ -1,0 +1,11 @@
+{
+  "token": "abc123",
+  "user":"aczietlow",
+  "owner": "drupal",
+  "repo": "drupal",
+  "users": [
+    "aczietlow",
+    "webchick",
+    "dbuytaert"
+  ]
+}

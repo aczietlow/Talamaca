@@ -6,7 +6,7 @@
 
 Create a config.json using the contents of config.default.json as a template.
 
-Read permissions are permissible with out an access token, however write permissions will require token access. To create a token perform the following steps:
+Read permissions are permissible without an access token, however write permissions will require token access. To create a token perform the following steps:
 
 1. Create a Personal Access Token
 - Go to your GitHub account settings.
@@ -18,18 +18,9 @@ Read permissions are permissible with out an access token, however write permiss
 - Add your token to the config.json file.
 
 
+
 ## Usages
 
 Very much WIP
 
-`go run issues.go $githubSearchSyntax`
-
-Search for all issues on a given repo
-`go run issues.go repo:aczietlow/goGoPing`
-
-Search for all issues on a given repo
-`go run issues.go repo:aczietnlow/goGoPing`
-
-Search for issues by a given user
-`go run issues.go user:aczietlow`
-
+`go run talamasca.go`
